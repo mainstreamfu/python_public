@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    {% load static %}
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <link href="{% static 'plugins/bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
+{#    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">#}
+    <script src="{% static 'plugins/bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+{#    <srcipt src="{% static 'js/mylogin.js' %}"></srcipt>#}
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        jQuery(document).ready(function ($) {
+             $(".btn").click(function () {
+                $.ajax({
+                    url:"",
+                    type:"post",
+                    data:{
+                        "csrfmiddlewaretoken":$("[name='csrfmiddlewaretoken']").val(),
+                        "user":$("#username").val(),
+                        "pwd":$("#password").val(),
+                        "valid_code":$("#valid_code").val()
+                    },
+                    success:function (data) {
+                        var login_reponse=JSON.parse(data);
+                        console.log(login_reponse);
+                        if (login_reponse.user){
+                            location.href="/index/"
+                        }
+                        else{
+                          $(".error").html(login_reponse.error_msg).css("color","red");
+
+                          setTimeout(function () {
+                               $(".error").html("")
+                          },1000)
+
+                        }
+                   }
+                })
+             })
+             $("#valid_img").click(function () {
+                 $(this)[0].src+="?"
+             })
+        });
+    </script>
+
+</head>
+<body>
+<div class="container">
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form row">
+            <div class="form-horizontal col-md-offset-3" id="login_form">
+                <h3 class="form-title">学生管理系统</h3>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <i class="fa fa-user fa-lg"></i>
+                        <input class="form-control required" type="text" placeholder="用户名" id="username" name="username"
+                               autofocus="autofocus" maxlength="20"/>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-lock fa-lg"></i>
+                        <input class="form-control required" type="password" placeholder="密码" id="password"
+                               name="password" maxlength="20"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <i class="fa fa-lock fa-lg"></i>
+                                <input class="form-control required" type="text" placeholder="验证码" id="valid_code"
+                                       name="text" maxlength="4"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img id="valid_img" style="padding-top: 20px" src="/get_valid_img/" alt="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="checkbox">
+                                <input type="checkbox" name="remember" value="1"/>记住我
+                            </label>
+                        </div>
+                        <div class="form-group col-md-offset-9">
+                            <button class="btn btn-success pull-right" type="button" name="submit">登录</button>
+                            <span class="error"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
