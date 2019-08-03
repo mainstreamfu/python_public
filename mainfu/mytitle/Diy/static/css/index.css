@@ -41,3 +41,44 @@ ul {
     left: 0;
     top: 0;
 }
+
+
+
+img {
+    vertical-align: top;
+}
+.fdj{
+    width: 352px;
+    height: 352px;
+    margin: 100px;
+    border: 1px solid #666;
+    position: relative;
+    display: none;
+}
+.fdj .small{
+    position: relative;
+}
+.fdj .big{
+    width: 450px;
+    height: 450px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: -460px;
+    border:1px solid #333333;
+    display: none;
+}
+.fdj .small .mask{
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+.big img{
+    position: absolute;
+    top:0;
+    left: 0;
+}
