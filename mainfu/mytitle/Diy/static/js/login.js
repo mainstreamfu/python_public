@@ -23,8 +23,6 @@ $(document).ready(function() {
                     }, 1000)
 
                 }
-
-
             }
         })
     })
@@ -32,4 +30,17 @@ $(document).ready(function() {
         $(this)[0].src += "?"
     })
 
+    var h1=document.getElementById("h1");
+    document.onclick=function(event){
+        var event =event||window.event;
+        targetX=event.clientX-h1.offsetWidth/2;
+        targetY=event.clientY-h1.offsetHeight/2;
+                           };
+    var targetX= 0,targetY= 0,leaderX= 0,leaderY=0;
+    setInterval(function(){
+        leaderX=leaderX+(targetX-leaderX)/10;
+        leaderY=leaderY+(targetY-leaderY)/10;
+        h1.style.left=leaderX+"px";
+        h1.style.top=leaderY+"px";
+                            },10)
 })

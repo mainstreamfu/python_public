@@ -1,0 +1,14 @@
+body{
+    background-image: url('../img/login.jpg');
+}
+
+.register{
+    background-color: skyblue;
+}
+#h1{
+    color: deeppink;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer
+}
