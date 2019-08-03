@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from .models import *
 from Diy.forms import *
+from django.contrib import auth
 
 # Create your views here.
 
@@ -28,9 +29,30 @@ def reg(request):
 
 #登录页面
 def logIn(request):
+    if request.is_ajax():
+        print(request.POST)
+        user=request.POST.get("user")
+        pwd=request.POST.get("pwd")
+        valid_code=request.POST.get("valid_code")
+        code_str=request.session.get("random_code_str")
+        print("random_code_str",code_str)
+        login_response={"user":None,"error_msg":""}
+        if valid_code.upper()==code_str.upper():
+            user=auth.authenticate(username=user,password=pwd)
+            if user:
+                login_response["user"]=user.username
+                auth.login(request,user)
+                print("===",request.session.get("random_code_str"))
+            else:
+                login_response["error_msg"] ="username or password error!"
+        else:
+            login_response["error_msg"]="valid code error!"
+        import json
+        return HttpResponse(json.dumps(login_response))
 
     return render(request,'login.html')
 
+#验证码
 def get_valid_img(request):
     import random
     def get_random_color():
@@ -55,3 +77,7 @@ def get_valid_img(request):
     data = f.getvalue()
     request.session["random_code_str"]="".join(temp)
     return HttpResponse(data)
+
+def index(request):
+
+    return render(request,"index.html",locals())

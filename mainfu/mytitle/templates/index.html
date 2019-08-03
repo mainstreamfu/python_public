@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+
+</head>
+<body>
+<div class="banner" id="nav">
+    <div class="colud">
+    </div>
+    <ul>
+        <li><a href="">新闻模块</a></li>
+        <li><a href="">游戏模块</a></li>
+        <li><a href="">购物模块</a></li>
+        <li><a href="">美图模块</a></li>
+        <li><a href="">学习模块</a></li>
+        <li><a href="">视频模块</a></li>
+        <li><a href="">出行模块</a></li>
+        <li><a href="">关于我们</a></li>
+    </ul>
+
+</div>
+</body>
+</html>
+
+<script>
+    window.onload=function(){
+        var nav =document.getElementById("nav");
+        var colud =nav.children[0];
+        var lis=nav.children[1].children;
+        var current=0;
+        for(var i=0; i<lis.length; i++)
+        {
+            lis[i].onmouseover=function(){
+                target=this.offsetLeft;
+            }
+            lis[i].onmouseout=function(){
+                target=current;
+
+            }
+            lis[i].onclick=function(){
+                current=this.offsetLeft;
+            }
+        }
+        var target= 0, leader=0;
+        setInterval(function(){
+            leader=leader+(target-leader)/10;
+            colud.style.left=leader+"px";
+        },10)
+    }
+</script>
