@@ -2,9 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>注册</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/register/register.css">
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/js/register/register.js"></script>
 </head>
 <body>
+<div class="head clearfix">
+    <div class="row header">
+        <h3 class="col-md-2">新用户注册</h3>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <div class="form-group col-md-offset-5">
+                <img src="/static/images/register/baidu.gif" alt="">
+            </div>
+            <form class="form-horizontal">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_user" class="col-sm-3 control-label">用户名：</label>
+                    <div class="col-sm-8">
+                            {{ register_form.user }}
+                            <span class="pull-right error"></span>
+                    </div>
+                    <span class="pull-right"></span>
+                </div>
+                <div class="form-group">
+                    <label for="id_pwd" class="col-sm-3 control-label">密码：</label>
+                    <div class="col-sm-8">
+                            {{ register_form.pwd }}
+                        <span class="pull-right error"></span>
+                    </div>
 
+                </div>
+                <div class="form-group">
+                    <label for="id_repeat_pwd" class="col-sm-3 control-label">确认密码：</label>
+                    <div class="col-sm-8">
+                        {{ register_form.repeat_pwd}}
+                        <span class="pull-right error"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="id_email" class="col-sm-3 control-label">邮箱：</label>
+                    <div class="col-sm-8">
+                        {{ register_form.email}}
+                        <span class="pull-right error"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="avatar" class="col-sm-3 control-label for-avatar">
+                        头像:&nbsp;&nbsp;
+                        <img class="avatar-img" id="avatar_img" width="60" height="60" src="/static/images/default.png" alt="">
+                    </label>
+                    <input type="file" id="avatar" style="display: none">
+                </div>
+                <div class="form-group div-reg">
+                    <div class="reg">
+                        <button type="button" class="btn btn-primary pull-right reg_btn" style="margin-right:50px">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
