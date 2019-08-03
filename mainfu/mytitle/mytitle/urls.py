@@ -20,5 +20,5 @@ from Diy import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', views.reg, name='reg'),
-    # path('login/', views.logIn, name='login'),
+    path('login/', views.logIn, name='login'),
 ]

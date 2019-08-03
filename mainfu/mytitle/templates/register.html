@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>注册</title>
+    <link rel="icon" href="/static/img/favicon.ico">
     <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7/css/bootstrap.css">
-    <link rel="stylesheet" href="/static/css/register/register.css">
+    <link rel="stylesheet" href="/static/css/register.css">
     <script src="/static/js/jquery-3.2.1.min.js"></script>
-    <script src="/static/js/register/register.js"></script>
+    <script src="/static/js/register.js"></script>
 </head>
 <body>
 <div class="head clearfix">
@@ -18,7 +19,7 @@
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
             <div class="form-group col-md-offset-5">
-                <img src="/static/images/register/baidu.gif" alt="">
+                <img src="/static/img/baidu.gif" alt="">
             </div>
             <form class="form-horizontal">
                 {% csrf_token %}
@@ -56,7 +57,7 @@
                 <div class="form-group">
                     <label for="avatar" class="col-sm-3 control-label for-avatar">
                         头像:&nbsp;&nbsp;
-                        <img class="avatar-img" id="avatar_img" width="60" height="60" src="/static/images/default.png" alt="">
+                        <img class="avatar-img" id="avatar_img" width="60" height="60" src="/static/img/default.png" alt="">
                     </label>
                     <input type="file" id="avatar" style="display: none">
                 </div>

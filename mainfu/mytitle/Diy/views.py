@@ -25,3 +25,8 @@ def reg(request):
         return HttpResponse(json.dumps(reg_response))
     register_form=RegisterForm()
     return render(request,'register.html',locals())
+
+def logIn(request):
+
+
+    return render(request,'login.html')
