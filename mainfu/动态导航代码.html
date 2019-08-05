@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			
+			li{
+				float: left;
+				font-size: 14px;
+				color: #333333;
+				padding: 0 13px;
+				height: 24px;
+				line-height: 24px;
+				margin-top: 3px;
+				cursor: pointer;
+				position: relative;
+				margin-right: 24px;
+				border-radius: 15px;
+				margin-bottom: 20px;
+			}
+			li:after{
+				content: "";
+                border-top: 4px solid transparent;
+                width: 0;
+                height: 0;
+                border-left: 4px dashed white;
+                border-right: 4px dashed white;
+                position: absolute;
+                left: 50%;
+                margin-left: -4px;
+                bottom: -4px;
+                overflow: hidden;
+			}
+			.dimo{
+				margin: 100px 500px 0 0;
+				padding-left:100px;
+			}
+			.cur,li.cur:after{
+				background: #7dce47;
+				color: #ffffff;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dimo">
+			<li id="li">
+				hello
+			</li>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	var li = document.getElementById("li");
+	li.onmousemove = function(){
+		li.className="cur"
+	}
+	li.onmouseleave = function(){
+		li.className=""
+	}
+</script>
