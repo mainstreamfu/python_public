@@ -41,6 +41,10 @@
 				background: #7dce47;
 				color: #ffffff;
 			}
+			.cur1,li.cur1:after{
+				background: #7dce47;
+				color: #ffffff;
+			}
 		</style>
 	</head>
 	<body>
@@ -58,5 +62,8 @@
 	}
 	li.onmouseleave = function(){
 		li.className=""
+	}
+	li.onclick = function(){
+		li.className="cur1"
 	}
 </script>
