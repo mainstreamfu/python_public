@@ -1,0 +1,954 @@
+﻿函数 function
+
+定义函数
+  def 函数名(参数列表):
+      语句块
+      ....
+
+
+调用函数
+  作用是让代表码块执行
+
+  len(x)
+
+return 语句
+  作用:
+    从一个函数中返回,返回到调用此函数的地方
+
+  语法：
+  　　return [表达式]
+    return　　# 等同于return None
+
+函数的参数传递
+  def myfun1(a, b, c):
+      print(a, b, c)
+
+  #位置传参
+  myfun1(1, 2, 3)
+
+  # 序列传参
+  myfun1(*"ABC")
+  myfun1(*[11,22,33])
+  (*args)
+
+  # 关键字传参
+  myfun1(b=20, a=10, c=30)
+  # 字典关键字传参
+  d = {"c":33, "b":22, "a":11}
+  myfun1(**d) ## (**kwargs)
+
+
+函数的缺省参数: default argument
+  语法:
+    def 函数名(形参名1=默认实参1, 形参名2=默认实参2, ...):
+       语句块
+
+  def myadd(a, b, c=0, d=0):
+      return a + b + c + d
+
+  print(myadd(100, 200))
+  print(myadd(100, 200, 300))
+  print(myadd(100, 200, 300, 400))
+
+
+--------  以下讲函数形参(定义函数时) -----------
+前情回顾:
+函数参数的定义方式:
+  位置形参
+  星号元组形参 (*args)   type 'tuple'
+  命名关键字形参
+  双星号字典形参 (**kwargs) type 'dict'
+
+位置形参
+语法:
+  def 函数名(形参名1, 形参名2, ....):
+     语句块
+示例:
+  def myadd(a, b, c, d):  # a,b,c,d为位置形参
+      return a + b + c + d
+
+星号元组形参
+语法：
+　　def 函数名(*元组形参名):
+    语句块
+作用：
+　　收集多余的位置传参
+
+示例见:
+  star_argument.py
+
+
+命名关键字形参:
+语法:
+  def 函数名(*,命名关键字形参列表)
+  #　或
+  def 函数名(*args,命名关键字形参列表)
+
+作用：
+　　所有的参数都必须用关键字传参或字典关键字传参
+
+示例见:
+  keywords_argument.py
+
+双星号字典形参
+语法:
+  def 函数名(**字典形参名): (**kwargs)
+    语句块
+作用:
+  用于收集多余的关键字传参
+示例:
+  start_dict_argument.py
+
+函数的参数说明:
+  位置形参,星号元组形参,命名关键字形参,双星号字典形参和缺省形参可以混合使用
+
+函数参数自左至右的顺序为:
+  位置形参,星号元组形参,命名关键字形参,双星号字典形参	(a,b,*args,c=0,**kwargs)
+
+综合示例:
+  def fn(a, b, *args, c, **kwargs):
+      pass
+
+
+可以接收任意的位置传参和和关键传参的函数:
+  def fn(*args, **kwargs):
+     pass
+
+示例:
+  实现mymax函数,功能与max函数功能相同
+  见: mymax.py
+
+练习:
+  1. 写一个函数getmin(x) 返回一个列表中的最小数
+  def getmin(lst):
+      ....
+
+  print(getmin("A1B2C3"))  # 1
+  print(getmin([5, 3, 1, 2, 4]))  # 1
+
+  2. 写一个函数,传入任意的整数数字,然后将所有的数字相加之和返回
+  def mysum(...):
+      ...
+
+  print(mysum(1, 2, 3, 4))  # 10
+  print(mysum(100, 200))  # 300
+
+
+函数变量
+  函数名是变量,它在创建函数时绑定一个函数
+
+示例1:
+  def f():  # f为变量,f绑定一个函数
+      print("hello")
+      print("world")
+
+  f1 = f  # 注意f没有加()
+  f1()  # ????
+示例2:
+  def f1():
+      print("hello")
+  def f2():
+      print("world")
+
+  f1, f2 = f2, f1
+  f1()  # ???
+
+一个函数可以作为另一个函数的参数传递
+示例:
+  def say_hello():
+      print("hello world")
+  
+  def f2(f):
+      print(f)
+      f()  # 调用f变量绑定的函数
+
+  f2(say_hello)  # ???
+
+示例:
+  def goodbye(L):
+      for x in L:
+          print("再见", x)
+
+  def hello(L):
+      for x in L:
+          print("您好", x)
+
+  def operator(fn, L):
+      fn(L)  # 调用fn绑定的函数
+
+  operator(goodbye, ["Tom", "Jerry"])  # ????
+
+案例:
+  # 试看懂下面的代码:
+  def myinput(fn):
+      L = [3,1,5,9,7]
+      return fn(L)
+
+  print(myinput(max))  # 9
+  print(myinput(min))  # 1
+  print(myinput(len))  # 5
+  print(myinput(sum))  # 25
+
+函数可以作为另一个函数的返回值:
+  def get_op():
+      s = input("请输入你的操作: ")
+      if s == "求最大":
+          return max
+      elif s == '求最小':
+          return min
+      elif s == '求和':
+          return sum
+
+  L = [2, 4, 6, 8, 10]
+  f = get_op()
+  print(f(L))  # ????
+
+练习:
+  写一个计算器函数get_op, 此函数有一个参数op,如下:
+  已知有如下函数:
+    def myadd(x, y):
+        return x + y
+    def mymul(x, y):
+        return x * y
+
+    def get_op(s):
+        ...  # 此函数需要完成
+
+    s = input("请输入计算公式: ")  # 10 加 20
+    L = s.split()
+    a = int(L[0])
+    b = int(L[2])
+    fn = get_op(L[1])
+    print("结果是:", fn(a, b))  # 
+  # python3 xxx.py
+  请输入计算公式: 10 加 20
+  结果是: 30
+  请输入计算公式: 10 乘 20
+  结果是: 200
+
+函数的嵌套:
+  函数嵌套是指一个函数里用def语句来创建其它的函数的情况
+
+示例:
+  def fn_outter():
+      print("fn_outter被调用!")
+      def fn_inner():  # 此函数是嵌套在fn_outter内的函数
+          print("fn_inner被调用!")
+      fn_inner()  # 调用第一次
+      fn_inner()  # 调用第二次
+      print("fn_outter调用结束!")
+      return fn_inner  # 返回函数(注意不加括号)
+
+  f = fn_outter()
+  f()  # 调用内部嵌套的fn_inner
+====================================分割线==============================
+
+全局变量和局部变量
+局部变量
+  定义在函数内部的变量称为局部变量(函数的形参也是局部变量)
+  局部变量只能在函数内部使用
+  局部变量在函数调用时被自动创建,在函数调用之后会自动销毁
+
+全局变量
+  定义在函数外部,模块内部的变量称为全局变量
+  全局变量,所有函数都可以直接访问(但函数内不能将其直接赋值)
+
+示例:
+  a = 100
+  b = 200     # a,b都为全局变量
+  def fn(c):   # c为局部变量
+      d = 400  # d为局部变量
+      print(a, b, c, d)
+
+  fn(300)
+
+python 作用域
+  作用域也叫命名空间,是访问变量时查找变量名的范围空间
+
+python的四个作用域 LEGB
+作用域                 英文解释               英文简写
+局部作用域(函数内)    Local Function             L
+外部嵌套函数作用域    Enclosing function locals  E
+函数定义所在模块的作用域  Global(module)          G
+Python 内置模块的作用域    Builtin(Python)       B
+
+变量名的查找规则:
+  在访问变量时,先查找本地变量,然后是包裹此函数外部函数内的变量,之后是全局变量,最后是内置变量
+     L  ->   E  -> G  -> B
+示例见:
+   legb.py
+
+说明:
+  在默认的情况下,变量赋值会创建或者修改本地作用域的变量
+
+
+global语句
+作用:
+  告诉解释器,global语句声明的一个或多个变量,这些变量的作用域为模块级的作用域,也称作全局变量
+  全局声明(global)将赋值变量映射到模块文件内部的作用域
+语法:
+  global 变量1, 变量2, ...
+示例见:
+  global.py
+
+global说明:
+  1. 全局变量如果要在函数内部被赋值,则必须经过全局声明(否则会被认为是局部变量)
+  2. 全局变量在函数内部不经过声明就可以直接访问(如果变量已经存在且关联一个对象)
+  3. 不能先声明局部变量,再用global声明为全局变量,此做法不附合规则
+  4. global变量列表里的变量名不能出现在此作用域的形参列表里
+
+练习:
+  写一个函数hello(name),部分代码如下:
+  call_count = 0
+  def hello(name):
+      print("你好:", name)
+      ....
+  # 让call_count 来记录此函数调用的次数 
+  hello("hello")
+  hello("world")
+  print("hello函数被调用了", call_count, "次")
+
+nonlocal 语句
+作用:
+  告诉解释器, nonlocal声明的变量不是局部变量,也不是全局变量,而是外部嵌套函数内的变量
+语法:
+  nonlocal 变量名1, 变量名2, ...
+示例见:
+  nonlocal.py
+说明:
+  1. nonlocal语句只能在被嵌套的函数内部进行使用
+  2. 访问nonlocal变量将对外部嵌套函数作用域内的变量进行操作
+  3. 当有两层或两层以上函数嵌套时,访问nonlocal变量只对最近的一层变量进行操作
+  4. nonlocal语句的变量列表里的变量名,不能出现在此函数的参数列表中
+
+示意:
+def f1():
+    v = 100
+    def f2():
+        v = 200
+        def f3():
+            nonlocal v
+            v += 1  # 将f2的v改为201
+        f3()
+    f2()
+f1()
+
+
+前情回顾：
+函数的形参(形式参数)
+def 函数名(形参列表):
+   pass
+
+位置形参
+星号元组形参(收集多余的位置传参) *args
+命名关键字形参
+双星号字典形参(收集多余的关键字传参) **kwargs
+
+函数变量
+  函数名就是变量，此变量绑定的是函数
+
+１．　一个函数可以作为另一个函数的参数传递
+２．　一个函数可以返回另一个函数的引用关系（关联关系）
+
+函数的嵌套:
+  def f1():
+      def f2():
+          pass
+
+  f2() # 错的,f2是局部变量
+
+局部变量 / 全局变量
+  del 语句可以手动删除全局变量
+
+
+python 四个作用域(名字空间)
+Local (局部)
+Enclosing Function Local(外部嵌套函数作用域)
+Global(全局，模块级作用域)
+Builtin(内置模块作用域)
+
+
+变量赋值会在当前作用域内创建变量
+
+global 语句
+nonlocal语句
+
+
+globals() 和 locals() 函数
+  globals() 返回当前全局作用域内的变量的字典　
+  locals() 返回当前局部作用域内的变量的字典
+示例见：
+  globals_locals.py
+
+
+eval函数　和 exec函数
+
+eval 函数：
+作用：
+　　把一个字符串当成一个表达式来执行,返回表达式执行后的结果
+格式:
+  eval(source, globals=None, locals=None)
+示例见:
+    eval.py
+
+exec函数
+作用:
+  把一个字符串当成程序来执行
+格式:
+  exec(source, globals=None, locals=None)
+
+lambda 表达式 (又称匿名函数)
+作用:
+  创建一个匿名函数对象
+  同 def 类似,但不提供函数名
+语法:
+  lambda [形参名1, 形参名2, ...] : 表达式
+  注:[]内的内容可省略
+
+示例见:
+   lambda.py
+
+语法说明:
+  1. lambda 只是一个表达式,它用来创建一个函数对象
+  2. 当lambda表达式执行时,返回的是冒号后(:),表达式的值
+  3. lambda表达式创建的函数只能包含一条语句
+  4. lambda 比函数简单且可以随时创建和销毁,有利于减少程序的偶合度
+
+练习:
+  1. 看懂下面的程序在做什么?
+  def fn(f, x, y):
+      print(f(x, y))
+
+  fn((lambda a, b: a + b), 100, 200)
+  fn((lambda a, b: a ** b), 3, 4)
+
+  2. 写一个lambda表达式,求两个变量的最大值
+  def mymax(x, y):
+      ...
+  mymax = lambda ...
+  print(mymax(100,200))  # 200
+
+
+函数式编程
+  是指用一系列函数解决问题
+
+python语言 函数是一等公民
+  函数本身可以赋值给变量,赋值后变量绑定函数
+  允许将函数本身作为参数传入另一个函数
+  允许函数返回一个函数
+
+好处:
+  每一个函数完成细小的功能,一系列函数的任意组合可以解决大问题
+  函数仅接收输入并产生输出,不包含任何可以影响输出的内部状态
+
+函数式编程的要求:
+  def 创建的函数最好不要访问局部作用域以外的变量,这样可以保证返回结果的唯一性(可重入性)
+
+可重入性是指,输入一定.结果必然一定的函数
+示例:
+  def myadd(x, y):  # <-- 这是可重入函数
+      return x + y
+
+  s = 0
+  def myadd2(x, y):
+      """这是不可重入函数,因为它会改变局部以外的变量"""
+      global s
+      s += x + y
+      return s
+
+高阶函数 high order function
+什么是高阶函数:
+  满足下面两个条件之一的就为高阶函数:
+    1. 函数接受一个或多个函数作为参数传入
+    2. 函数返回一个函数
+
+python 内置(builtins)的高阶函数:
+  map, filter, sorted
+
+map函数:
+  map(func, *iterables) 用函数对可迭代对象中的每一个元素作为参数计算出新的可迭代对象.当最短的一个迭代器完成迭代后此迭代器生成结束
+
+示例:
+  def power2(x):
+      return x**2
+  
+  mit = map(power2, range(1, 10))
+  [ x for x in mit ]
+
+示例2:
+  用map生成一个可迭代对象,此可迭代对象可以生成:
+   1**4, 2**3, 3**2, 4**1 这样的数
+  pow(x, y, z=None)
+  [x for x in map(pow, range(1, 5), range(4, 0, -1))]
+
+示例3:
+  [x for x in map(pow, range(1, 5), 
+                     [4,3,2,1], range(5, 10))]
+
+
+练习:
+  1. 求:
+    1**2 + 2**2 + 3**2 + .... + 9**2 的和
+  2. 求:
+    1**1 + 2**2 + 3**3 + .... + 9**9 的和
+  3. 求:
+    1**9 + 2**8 + 3**7 + ... + 9**1 的和(11377)
+
+filter 函数:
+格式:
+  filter(function, iterable)
+作用:
+  - 筛选可迭代对象iterable中的数据,返回一个可迭代对象,此可迭代对象将对iterable生成的数据进行筛选
+  - 函数function 将对iterable中的每个元素进行求值,返回False则将此数据丢弃,返回True,则保留此数据
+
+示例:
+  def isodd(x):
+      return x % 2 == 1
+  odd = [x for x in filter(isodd, range(10))] #生成奇数列表
+
+  even = [x for x in filter(lambda x: x % 2 == 0, range(100))]
+
+sorted 函数
+作用:
+  将原可迭代对象的数据进行排序,生成排序后的列表
+格式:
+  sorted(iterable, key=None, reverse=False)
+说明:
+  iterable 可迭代对象
+  key 函数是用来提供一个值,这个值将作为排序的依据
+  reverse 标志用来设置是否降序排序
+
+示例:
+  L = [5, -2, -4, 0, 3, 1]
+  L2 = sorted(L)
+  L2 = sorted(L, reverse=True)
+  L2 = sorted(L, key=abs)  # [0, 1, -2, 3, -4, 5]
+  names = ['Tom', 'Jerry', 'Spike', 'Tyke']
+  # len 函数
+  # 以字符串长度进行排序 ['Tom', 'Tyke', 'Jerry', 'Spike']
+  L = sorted(names, key=len)
+
+
+递归函数 recursion
+  函数直接或间接的调用自身
+
+示例:
+  def f():
+      f()  # 直接调用自身
+
+  f()
+  print('f()调用已返回!')
+示例2:
+  函数间接的调用自身
+  def fa():
+      fb()
+
+  def fb():
+      fa()
+
+  fa()
+  print("递归完成是不可能的,此句不会被打印")
+
+递归说明:
+  递归一定要控制递归的层数,当符合某一条件时要终止递归调用
+  几乎所有的递归都能用while循环来代替
+
+示例:
+  # 打印 1 2 3 4 5
+  def fn(n):
+      print(n)
+      if n == 5:
+         return
+      fn(n + 1)  # 递归调用至下一层
+
+  fn(1)
+示例2:
+  # 递归函数的调用过程
+  见: recursion.py
+
+示例3
+  # 用递归求 n 的阶乘
+  def factorial(n):
+      if n == 1:  # 1的阶乘是1
+         return 1
+      return n * factorial(n-1)
+
+  print(factorial(5))  # 120
+
+练习:
+  用递归求 1 + 2 + 3 + .... + n 的和
+  def mysum(n):
+      ....
+
+  print(mysum(100))  # 5050
+
+递归的优缺点:
+  优点:
+    递归可以把问题简单化,让思路更为清晰,代码更简洁
+  缺点:
+    递归因系统环境影响大,当递归深度太大时,可能会得到不可预知的结果
+
+练习:
+  1. 编写程序,使用递归算5! 阶乘
+
+  2. 写程序算出1~20的阶乘的和
+    1!+2!+3!+......19!+20!
+
+
+
+
+获取全局变量或局部变量字典的函数：
+  globals() / locals()
+
+eval(s, global=None, local=None)
+exec(s, global=None, local=None)
+
+
+lambda 表达式
+  创建一个匿名的函数对象
+
+lambda 参数列表 : 表达式
+
+函数式编程:
+   1 + 2**2 + 3**2 + 4**2 + .... + n**2
+   n == 100
+   sum(map(lambda x : x**2, range(1, n+1)))
+
+高阶函数:
+  map, filter, sorted
+  filter(函数，　可迭代对象)
+  sorted(可迭代对象, key=函数, reverse=False)
+
+递归 recursion
+
+A->B->C->D->A
+
+
+闭包 closure
+  将组成函数的语句和这些语句的执行环境打包在一起时，得到的对象称为闭包.
+
+说明：
+　　如果一个内嵌函数访问外部嵌套函数作用域的变量，并返回这个函数，则这个函数就是闭包
+
+闭包必须满足三个条件:
+  1. 必须有一个内嵌函数
+  2. 内嵌函数必须引用外部嵌套函数中的变量
+  3. 外部函数返回值必须是内嵌函数
+示例:
+  # 得到一个数的n次方法函数
+  def make_power(y):
+      def fn(x):
+          return x ** y
+      return fn
+  pow2 = make_power(2)
+  print('5的平方是:', pow2(5))
+  pow3 = make_power(3)
+  print("6的立方是:", pow3(6))
+
+闭包的使用示例:
+  见: closure.py
+
+装饰器  decorators(专业提高篇)
+什么是装饰器:
+  装饰器是一个函数,主要作用是用来包装另一个函数或类(后面才讲)
+  包装的目的是在不改变原函数名(或类名)的情况下,改变被包装对象的行为
+
+函数装饰器 fuctional decorators
+  函数装饰器是指装饰器函数传入的是一个函数,返回的也是一个函数
+
+函数装饰器的语法:
+  def 装饰器函数名(参数):
+     语句块
+     return 函数对象
+
+  @ 装饰器函数名<换行>
+  def 函数名(参数列表):
+      语句块
+
+示例见:
+  mydeco1.py
+
+没有参数的函数装饰器外面再包装一层函数调用
+示例见:
+  mydeco2.py
+
+装饰器修饰带有参数的函数
+示例见: 
+  mydeco3.py
+
+
+模块 module
+什么是模块
+  模块是一个包含有一系列函数,类,变量等组成的程序组
+  模块是一个文件,模块文件名通常以.py结尾
+
+作用:
+  让一些相关的变量,函数,类等有逻辑的组织在一起,使逻辑结构更加清晰
+  模块中的变量,函数和类等可提供给其它模块或程序使用
+
+模块的分类:
+  1. 内置模块(builtins) 在解析器的内部可以直接使用
+  2. 标准库模块. 安装python时已安装且可以直接使用
+  3. 第三方模块(通常为开源), 需要自己安装(pip3 install 模块名)
+  4. 用户自己编写的模块(可以作为其它人的第三方模块)
+
+内置模块有:
+  builtins, sys, time, posix, itertools, ....
+标准库模块
+  random, math, datetime, os, functools, re, .......
+
+模块的导入 import
+
+import 语句
+语法:
+  import 模块名1 [as 模块新名1], 模块名2 [as 模块新名2],...
+示例:
+  # 导入数学模块
+  import math
+  # 导入系统sys模块和os模块
+  import sys, os
+作用:
+  将某模块整体导入到当前模块中
+
+import 语句用法:
+  模块名.属性名
+  模块名.函数名(实际调用参数)
+  注:
+    属性是指模块内的变量
+
+dir(obj) 函数,返回所有属性的字符串列表
+help(obj) 函数,可以查看模块相关的文档字符串
+
+
+练习:
+  1. 输入一个圆的半径,打印这个圆的面积
+    (用math模块内的函数和变量)
+  2. 输入一个圆的面积,打印出这个圆的半径
+
+from import 语句
+语法:
+  from 模块名 import 模块的属性名1 [as 模块的属性新名1], 模块属性名2 [as 模块的属性新名2], ...
+作用:
+  将某模块内的一个或多个属性导入到当前模块的作用域
+示例:
+  from math import factorial as fac
+  from math import pi
+  from math import sqrt
+
+
+from import * 语句
+语法:
+  from 模块名 import *
+作用:
+  将某模块的所有属性导入到当前模块
+
+示例:
+  from math import *
+
+
+import 语句有三种形式:
+  import xxx
+  from xxx import yyy, zzz
+  from xxx import *
+
+dir函数:
+格式:
+    dir([对象])  -> 返回字符串列表
+作用:
+  1. 如果没有参数调用,则返回当前作用域内所有变量的列表
+  2. 如果给定一个对象作为参数,则返回这个对象的所有变量的列表
+    1)对于一个模块,返回这个模块的全部变量
+    2)对于一个类对象,返回类对象的所有变量,并递归基类对象的所有变量
+    3)对于其它对象,返回所有变量,类变量和基类变量
+
+时间模块 time
+详见:
+  python_base_docs/时间模块time_xxx.html
+
+练习:
+  1. 输入您的出生日期,算出您已经出生多少天?
+
+
+  2. 打印出一个电子时钟,格式为:
+    HH:MM:SS 
+    (time.sleep())
+  3. 编写一个闹钟程序,启动时设置定时时间,到时间后打印一句话,然后退出程序
+
+
+
+闭包 closure
+  闭包的三个条件:
+    1.要嵌套函数
+    2.被嵌套函数要使用外部嵌套函数的局部变量
+    3.返回被嵌套函数
+
+闭包的外部嵌套函数有点像函数工厂
+    def make_pow(y):
+        def f(x):
+            return x ** y
+        return f
+    make_pow(2)
+    make_pow(3)
+
+装饰器:
+  @mydecoxxx  # myfun = mydecoxxx(myfun)
+  def myfun():
+     pass
+
+模块 module
+  导入模块(有三种方式):
+    import xxx [as zzz]
+    from xxx import yyy [as zzz]
+    from xxx import *
+
+  导入模块时尽量避免变量名冲突
+  import time
+
+模块分为几类:
+  内建模块
+  标准库模块
+  第三方模块
+  自定义模块
+
+time 模块
+math 模块
+
+
+
+day13笔记:
+系统模块 sys
+   此模块记录与运行时系统相关的信息
+
+文档见:python_base_docs/系统模块sys_xxxx.html
+
+
+自定义模块并导入
+  用户自己编写的模块
+示例:
+  mymod.py  # 自定义模块 
+  test_mod.py  # 用来测试自定义模块
+
+
+程序由模块组成
+模块内有函数,类,变量
+...
+
+
+模块的路径的搜索顺序:
+  import xxx (模块名)  # 去哪儿找xxx.py
+
+  1. 程序运行的当前路径 (运行时路径:pwd命令返回的路径)
+  2. sys.path提供的路径
+      sys.path是一个列表,里面放的是模块的搜索路径
+  3. 搜索内置模块
+
+模块化编程的优点:  　　＃　　-> 面向对象编程
+  1. 有利于多人合作开发
+  2. 代码更易于维护
+  3. 提高代码的复用率(模块可以被其它代码或模块使用)
+  4. 模块化编程有助于解决函数名和变量名冲突(重名)问题,模块内的变量的作用域为模块内全局(模块内的函数可以直接访问本模块的全局变量)
+
+模块的加载过程:
+　　在模块导入时，模块的所有语句都会执行
+　　如果一个模块已经导入，则再次导入时不会重新执行模块内的语句
+
+重新加载已导入的模块:
+示例：
+　　import mymod2
+  mymod2.f1()  # 调用之前的f1()函数
+  # 修改mymod2.py
+
+  import imp  # imp模块是与模块导入相关的模块
+  imp.reload(mymod2)  # 重载加载模块
+  mymod2.f1()  # 模块被重新加载
+
+模块的 __name__属性
+  模块内的__name__属性用于记录模块自身的名字
+作用：
+　　1. 记录模块名
+  2. 用来判断是否为主模块
+说明：
+　　每个模块内都有一个变量__name__, 用于绑定此模块的名称的字符串
+  当此模块作为主模块时，__name__绑定'__main__'
+  当此模块不是主模块是，__name__绑定　模块名
+    如:mymod.py 的模块名为mymod
+
+
+__file__属性
+  __file__属性绑定此模块对应的文件路径名
+
+
+__doc__ 属性和模块的文档字符串
+
+
+
+模块的__all__列表
+  模块中的__all__ 列表是一个用来存放可导出属性的字符串列表
+作用:
+  当用from xxx import * 时,只导入__all__列表内的属性
+示例见:
+  mymod4.py
+
+
+
+模块的隐藏属性:
+  模块中以'_' 开头的属性,在from xxx import * 导入时将不被导入,通常称这些属性为隐藏属性
+
+示例见:
+  mymod5.py
+
+
+模块被导入和执行的过程
+  1. 先搜索相关路径打模块(.py)
+  2. 判断是否有此模块对应的.pyc文件,如果.pyc文件比.py文件新,则直接加载.pyc文件
+  3. 否则用模块.py文件生成.pyc并加载执行
+
+            编译(compile)     执行
+  mymod.py  --->  mymod.pyc  ---> python3
+
+
+示例:
+a = 100
+def f():
+    a += 10  # 运行时出错
+    a = 20
+
+标准库模块
+随机模块 random
+详见:
+   python_base_docs/随机模块random_xxxx.html
+
+
+练习:
+  猜数字游戏
+  写一个程序,随机生成一个0~100之间的一个整数,保存在变量x内
+  让用户输入一个数y,输入猜数字的结果
+    如果y等于生成的数x,则提示"恭喜您猜中了!" 并退出程序
+    如果y大于x,则提示"您猜大了", 然后继承猜
+    如果y小于x,则提示"您猜小了", 
+  直到猜对为止,显示用户猜数字的次数后退出程序
+
+
+折半查找
+1000页的书,如果能快速翻到720
+
+math.log(1000, 2)
+
+练习:
+  1. 模拟斗地主发牌, 扑克牌共54张
+    三个人一起玩,每个人发17张,底牌三张
+
+    牌的种类:
+      黑桃('\u2660'), 梅花('\u2663'), 方块('\u2665'), 红桃('\u2666')
+    数字:
+      A2~10JQK
+    大小王
+    要求,输入回车,打印第1个人的17张牌
+    再回车,打印第2个人的17张牌
+    再回车,打印第3个人的17张牌
+    再回车,打印三张底牌
+
+
+
+
+

@@ -1,0 +1,610 @@
+=======
+包(模块包) package
+  包是将模块以文件夹的形式进行分组管理的方法
+
+作用:
+  1. 将一系列模块进行分类管理,有利于防止命名冲突
+  2. 可以在需要时加载一个或部分模块而不是全部模块
+
+示例:
+  mypack/
+      __init__.py
+      menu.py  # 菜单管理模块
+      games/    # 游戏相关的模块
+          __init__.py
+          contra.py      # 魂斗罗
+          supermario.py  # 超级玛丽
+          tanks.py       # 坦克大作战
+      office/  # 办公软件相关的模块
+          __init__.py
+          excel.py
+          word.py
+          powerpoint.py
+
+包的导入:
+  # 规则同模块的导入规则
+  import 包名 [as 包别名]
+  import 包名.模块名 [as 模块新名]
+  import 包名.子包名.模块名 [as 模块新名]
+
+  from 包名 import 模块名 [as 模块新名]
+  from 包名.子包名 import 模块名 [as 模块新名]
+  from 包名.子包名.模块名 import 变量名 [as 变量新名]
+
+  # 导入包内的所有子包和模块
+  from 包名 import *
+  from 包名.模块名 import *
+  ...
+
+__init__.py 文件 
+  1. __init__.py 是常规包内必须存在的文件
+  2. __init__.py 会在包加载时被自动调用
+作用:
+  1. 在内部填写文档字符串
+  2. 在__init__.py 文件内可以加载此包所依懒的一些模块
+
+__init__.py 内的 __all__列表
+作用:
+  用来记录此包中有哪些子包或模块需要导入
+  当用from 包 import * 语句导入模块时,只查找__all__列表中的模块或子包
+说明:
+  __all__列表只在from xxx import *时起作用
+
+示例见:
+  mypack/games/__init__.py
+
+包的相对导入
+  包的相对导入是指包内模块的相互导入
+语法:
+  from 相对路径包或模块 import 属性或模块名
+  或
+  from 相对路径包或模块 import *
+相对路径:
+  在 from xxxx import 语句中可以使用相对导入
+  xxxx 中可以含有相对路径
+  . 代表相当目录
+  .. 代表上一级目录
+  ... 代表上二级目录
+  .... 以此类推
+  注: 相对导入时不能超出包的外部
+
+示例见:
+   mypack/games/tanks.py
+   和
+   test_from_import.py
+
+
+包的加载路径
+  同模块的加载路径相同
+    1. 可以将路径添加至sys.path
+    2. 可以将此包安装到sys.path指定的路径中
+
+
+
+
+
+异常(基础) exception
+什么是错误
+  错误是指由于逻辑或语法等导致一个程序无法正常执行的问题
+
+什么是异常
+  异常是程序出错时标识的一种状态
+  当异常发生时,程序不会再向下执行,而转去调用此函数的地 方待处理此错误恢复为正常状态
+
+异常的作用:
+  通知上层调用者有错误产生需要处理
+  用作信号通知
+
+try 语句
+两种语法:
+  try-except语句
+  try-finally语句
+
+try-except语句的语法:
+  try:
+      可能触发异常的语句
+  except 错误类型1 [as 变量1]:
+      异常处理语句1
+  except 错误类型2 [as 变量2]:
+      异常处理语句2
+  except (错误类型3, 错误类型4, ...) [as 变量3]
+      异常处理语句3
+  ...
+  except:
+      异常处理语句other
+  else:
+      末发生异常语句
+  finally:
+      最终语句
+作用:
+  偿试捕获异常,将程序转为正常执行流程
+
+说明:
+  1. as 子句是用于绑定错误对象的变量 可以省略
+  2. except 子句可以有一个或多个,但至少要有一个
+  3. else 子句最多只能有一个,也可以省略不写
+  4. finally 子句最多只能有一个,也可以省略不写
+示例见:
+  try.py
+
+
+try-finally 语句
+语法:
+  try:
+    可能触发异常的语句
+  finally:
+    最终语句
+
+语法说明:
+  finally 子句不可以省略
+  一定不存在except子句
+作用:
+  通常try-finally语句用来做触发异常时必须要处理的事情
+  无论异常是否发生,finally子句都会被执行
+注:
+  try-finally语句不会改变程序的(正常/异常)状态
+
+示例见:
+  try_finally.py
+
+
+练习:
+  写一个函数get_score()来获取输入的学生成绩(0~100)
+  如果用户输入的成绩不合法,或出现异常,则此函数返回0,否则返回用户输入值
+  def get_score():
+      ...
+
+  score = get_score():
+  print("学生的成绩是:", score)
+
+  要在get_score 内添加入异常处理语句
+
+
+================================15==========================
+  day14回顾:
+包: package
+  模块包
+
+包的导入:
+   import urllib
+   import urllib.request
+   from urllib import request
+   from urllib.request import *
+
+包的相对导入
+  .
+  ..
+  ...
+  ....    
+
+
+异常 exception
+  错误
+  异常
+
+try 语句
+  try-except
+  try-finally
+
+try:
+   控制锅炉
+finally:
+   把煤输送的断开
+   把燃烧供氧断开
+
+raise 语句
+作用:
+  触发一个错误,让程序进入异常状态
+语法:
+  raise 异常类型
+  或
+  raise 异常对象
+
+示例见:
+  raise.py
+
+
+为什么要用异常处理机制
+示例见:
+  used_except
+
+
+assert 语句(断言语句)
+语法:
+  assert 真值表达式, 错误数据(通常是字符串)
+作用:
+  当真值表达式为False时,用错误数据创建一个AssertionError类型的错误,并触发此错误进入异常状态
+等同于:
+  if bool(真值表达式) == False:
+      raise AssertionError(错误数据)
+
+
+异常总结:
+  try-except
+  try-finally
+  raise 语句
+  assert 语句      
+
+
+迭代器 Iterator 和 生成器 Generator
+什么是迭代器:
+  迭代器是指用iter(obj)函数返回的对象(实例)
+  迭代器可以用next(it) 函数获取可迭代对象的数据
+
+两个函数:
+  iter(iterable)  从可迭代对象中返回一个迭代器,iterable必须是一个能提供迭代器的对象
+  next(iterator)  从迭代器对象中获取下一个记录,如果无法获取下一条记录,则触发StopIteration异常
+
+示例:
+  L = [1,3,5,7]
+  it = iter(L)  # it 绑定迭代器对象 
+  print(next(it))  # 1
+  print(next(it))  # 3
+  print(next(it))  # 5
+  print(next(it))  # 7
+  print(next(it))  # StopIteration异常
+
+练习:
+  如下程序:
+    for x in range(1, 10, 3):
+        print(x)
+  请将上面的用for语句实现的功能改写为用while语句和迭代器实现
+
+生成器 Generator (Python2.5 及之后)
+什么是生成器
+  生成器能够动态提供数据对象,生成器对象也是可迭代对象
+
+生成器有两种:
+  生成器函数
+  生成器表达式
+
+生成器函数的定义
+  含有yield 语句的函数是生成器函数,此函数被调用时返回一个生成器对象
+  yield 翻译为产生(或生产)
+
+yield 语句
+语法:
+  yield 表达式
+说明:
+  yield 用于def 函数中,目的是将此函数作为生成器函数使用
+  yield 用来生成数据,供迭代器的next(it)函数使用
+
+生成器函数示例见:
+  yield.py
+
+生成器函数说明:
+  生成器函数的调用将返回一个生成器对象,生成器对象是一个可迭代对象
+  生成器函数调用return语句会触发一个StopIterator异常
+
+生成器函数应用示例:
+  见: myinteger.py
+
+
+练习:
+  写一个类似于range() 的函数myrange,此函数写为生成器函数.
+  myrange函数可以用1个,2个或3个参数来调用
+  def myrange(.....):
+      ....  # 此处不能用range函数
+  
+  for x in myrange(10):
+      print(x)
+  for x in myrange(5, 10):
+      print(x)
+  for x in myrange(5, 10, 2):
+      print(x)
+
+
+生成器表达式
+
+语法:
+  (表达式 for 变量 in 可迭代对象 [if 真值表达式])
+  注: if 子句可以省略
+
+作用:
+  用推导式形式生成一个新的生成器
+
+示例:
+  gen = (x**2 for x in range(1, 5))
+  it = iter(gen)
+  next(it)  # 1
+  next(it)  # 4
+  next(it)  # 9
+  next(it)  # 16
+  next(it)  # StopIterator
+
+看懂如下程序是什么意思:
+def isodd(a):
+    if a % 2 == 1:
+       return True
+    return False
+
+# 这是用一个生成器表达式生成 100以内奇数的立方
+for x in (x**3 for x in range(100) if isodd(x)):
+    print(x, end=' ')
+
+# 先一次性生成100以前奇数的立方存于列表中,然后再循环打印
+for x in [x**3 for x in range(100) if isodd(x)]:
+    print(x, end=' ')
+
+迭代工具函数
+  迭代工具函数的作用是生成一个个性化的可迭代对象
+
+函数       说明
+zip(iter1, iter2, iter3, ...) 返回一个zip对象,此对象用于生成一个元组,此元组的个数是则最小的可迭代对象决定
+enumerate(iterable, start=0) 生成带索引的枚举对象,返回的迭代类型为索引-值对(index-value对), 默认索引从零开始,可以用start指定
+
+示例:
+  numbers = [10086, 10000, 10010, 95588]
+  names = ['中国移动', '中国电信', '中国联通']
+  for x in zip(numbers, names):
+      n, a = x
+      print(a, '的客服电话是:', n)
+
+看懂下列代码在做什么?
+areas = ['北京', '上海', '广州', '深圳']
+codes = ['京', '沪', '粤', '深']
+
+for a,b,c in zip(range(100), areas, codes):
+    print(a, b, c)
+
+枚举函数enumerate
+格式:
+   enumerate(iterable, start=0)
+示例:
+  names = ['中国移动', '中国电信', '中国联通']
+  for x in enumerate(names):
+     print(x)
+
+练习:
+  写一个程序,读入任意行的文字,当输入空行时结束输入
+  打印带有行号的输出结果:
+  如:
+  $ python3 mytest.py
+  请输入: hello<回车>
+  请输入: world<回车>
+  请输入: aaaaa<回车>
+  请输入: <回车>
+  输出如下:
+  第1行: hello
+  第2行: world
+  第3行: aaaaa
+
+练习:
+  1. 用生成器函数,生成素数,给出起始值begin,和终止值stop
+  生成器函数为:
+    def primes(begin, stop):
+        .... 此处完要同学们自己完成
+
+    如果：
+    [x for x in primes(10, 20)] 将得到列表
+    [11, 13, 17, 19]
+　　注：练习使用yield
+　　2. 写一个生成器函数，　生成斐波那契数列的前n个数
+      1 1 2 3 5 8 13 ......
+    def fibonacci(n):
+         .....
+    1) 输入前20个斐波那契数
+    　　for x in fabonacci(20):
+         print(x)
+    2) 打印前40个斐波那契数的和
+
+
+==============================16======================================
+
+day15回顾
+raise 语句
+     触发异常］
+  raise 错误类型
+  或
+  raise 错误对象
+
+try-except 语句
+try-finally 语句
+
+assert 语句
+    根据一条条件来决定是否抛出AssertionError 类型的错误！
+
+
+迭代器和生成器
+什么是迭代器？？？
+
+迭代器 = iter(可迭代对象)
+
+生成器
+  生成器函数
+     yield 语句
+  生成器表达式
+
+调用生成器函数可以返回生成器对象（可迭代对象)
+def myyield():
+    yield 3
+    yield 5
+    yield 7
+
+生成器表达式:
+   (x for x in range(10))
+
+zip 函数
+enumerate 函数
+
+文件
+  小苹果.mp3
+  电影aaa.mp4
+  hello.py
+什么是文件：
+  文件是数据管理和数据存储的单位
+  文件通常用来长期存储数据
+
+文件的操作顺序：
+   1. 打开文件
+   2. 读写文件
+   3. 关闭文件
+
+文件的打开函数:
+   open(file, mode='rt')  用于打开一个文件，返回此文件流对象，如果打开文件失败，则会触发IOError错误！
+
+文件的关闭方法：
+   F.close()
+
+示例：
+  try:
+      # 打开文件，用file绑定文件流对象
+      file = open('hello.py', 'rt')
+      # 此处用来读写文件
+      # ...
+
+      # 关闭文件
+      file.close()
+  except IOError:
+      print('文件操作失败')
+
+见:open_close.py
+
+
+练习:
+   写程序,按以下步骤读取文件内容
+   1. 用open 函数打开自己编写的一个文本文件
+   2. 用F.readline() 方法循环读取文件内的内容,并打印出来
+      (把行号也打印出来)
+   3. 用F.close() 关闭文件
+
+文件流对象的方法详见:
+  文件_xxxx.html
+
+练习:
+  1.写一个程序,将如下数据写入到data.txt文件中
+    小张 13888888888
+    小李 13999999999
+    小赵 13666666666
+    要求用input函数读取读取数据,再用文件流写方法写入数据到文件中
+
+  2. 写一个读data.txt文件的程序,把刚才写入的内容读取出来,并形成表格打印出来
+    +---------+----------------+
+    |  name   |    numbers     |
+    +---------+----------------+
+    |   小张  |   13888888888  |
+    |   小李  |   13999999999  |
+    |   小赵  |   13666666666  |
+    +---------+----------------+
+
+
+二进制方式读写文件
+
+什么是二进制文件:
+  文件中以字节(bytes)为单位存储,不以字符为单位进行存储的文件
+
+字节串(也叫字节序列) bytes
+作用
+  存储以字节为单位的数据
+  字节串是不可变的字节序列
+
+说明：
+  这节是0~255之间的整数
+创建空字节串:
+  b''
+  b""
+  b''''''
+  b""""""
+创建非空字节串:
+  b'ABCD'
+  b"ABCD"
+  b"""ABCD"""
+  b'''ABCD'''
+  b'\x41\x42'
+字节串生成函数:
+  bytes() 生成一个空字节串等同于 b''
+  bytes(整数可迭代对象) 用可迭代对象初始化一个字节串
+  bytes(整数n) 生成n个值为0的字节串
+  bytes(字符串, encoding='utf-8') 用字符串的转换编码生成一个字符串
+示例：
+  b = bytes()
+  b = bytes([0x41, 0x42, 0x43, 0x44])
+  b = bytes('abcd','utf-8')
+  b = bytes(10)
+
+bytes运算:
+  +  +=  *  *=
+  < <= > >= == !=
+  in / not in 
+  索引/切片
+  (同字符串规则完全相同)
+
+len(x)
+max(x)
+min(x)
+sum(x)
+any(x)
+all(x)
+以上函数都可以用于bytes操作
+
+bytes 与 str的区别:
+  bytes 存储字节(0~255)
+  str 存储UNICODE字符(0~65535)
+
+bytes 与 str转换:
+  str ----> bytes
+     b = s.encode(encoding='utf-8')
+  bytes  ----> str
+     s = b.decode(encoding='utf-8')
+
+字节数组bytearray
+  可变是字节序列
+
+创建函数bytearray
+   bytearray()  创建空的字节数组
+   bytearray(整数n)  
+   bytearray(整数可迭代对象)
+   bytearray(字符串,encoding='utf-8')
+
+操作方式与bytes完全相同
+  + += * *=
+  < <= > >= == !-
+  in / not in 
+  索引 index/ 切片 slice
+  (字节数组支持索引和切片赋值操作，规则同列表的索引和切片赋值)
+
+
+
+F.seek() 函数
+  F.seek(偏移量, whence=相对位置)
+    偏移量:
+      大于0的数代表向文件末尾方向移动
+      小于0的数代表向文件头方向移动
+    相对位置：
+      0 代表从文件头开始偏移
+      1 代表从当前读写位置开始偏移
+      2 代表从文件尾开始偏移
+示例见:
+   seek.py
+
+
+标准输入输出文件:
+  sys.stdin
+  sys.stdout
+  sys.stderr
+  模块名: sys
+
+说明：
+　　每一个python程序启动后都会有以上三个文件已经打开且可以直接使用的文件
+
+
+练习：
+　　1. 　写一个程序，实现文件的复制
+　　　要求：
+　　　　　能复制所有文件
+　　　程序可以手动输入源文件和目标文件名
+   (注：只复制单个文件，不复制文件夹)
+
+  2. 完善<<学生信息管理项目>>
+    要求在菜单中加入两个功能:
+      9)  保存数据到文件(si.txt)
+      10) 从文件中读取数据(si.txt)
+
+
+
+
+
+
+
+
+
